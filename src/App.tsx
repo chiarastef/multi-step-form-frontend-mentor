@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import "./App.css";
 
-import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 import Signup from "./components/Signup";
 
 const AppEl = styled.div`
@@ -20,7 +20,7 @@ const AppEl = styled.div`
 const App = () => {
   return (
     <AppEl>
-      <Header />
+      <Sidebar />
       <Signup />
     </AppEl>
   );

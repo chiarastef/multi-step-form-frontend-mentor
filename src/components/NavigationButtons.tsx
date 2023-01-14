@@ -4,6 +4,8 @@ import styled from "styled-components";
 const NavigationBtns = styled.div`
   position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   background-color: #ffffff;
@@ -12,6 +14,7 @@ const NavigationBtns = styled.div`
 
   @media screen and (min-width: 768px) {
     position: static;
+    margin-top: 50px;
   }
 `;
 
@@ -22,6 +25,10 @@ const BackBtn = styled.button`
   color: var(--text-color);
   background-color: transparent;
   border: none;
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const NextBtn = styled.button`
@@ -33,6 +40,11 @@ const NextBtn = styled.button`
   padding: 14px;
   border: none;
   border-radius: 6px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
 `;
 
 const NavigationButtons = () => {
