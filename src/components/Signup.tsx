@@ -5,6 +5,10 @@ import PersonalInfo from "./PersonalInfo";
 import SelectPlan from "./SelectPlan";
 import NavigationButtons from "./NavigationButtons";
 
+interface Props {
+  page: number;
+}
+
 const Container = styled.div`
   background-color: #ffffff;
   width: 90%;
@@ -16,13 +20,12 @@ const Container = styled.div`
   @media screen and (min-width: 768px) {
     margin: 0 auto;
     padding: 50px 60px 0;
-    border-radius: 10px;
+    border-radius: 0 10px 10px 0;
   }
 `;
 
-const Signup = () => {
-  const [page, setPage] = React.useState<number>(1);
-
+const Signup = ({ page }: Props) => {
+  // Show page based on page prop
   switch (page) {
     case 1:
       return (

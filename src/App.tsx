@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import "./App.css";
 
 import Sidebar from "./components/Sidebar";
 import Signup from "./components/Signup";
@@ -18,10 +17,12 @@ const AppEl = styled.div`
 `;
 
 const App = () => {
+  const [page, setPage] = React.useState<number>(1);
+
   return (
     <AppEl>
-      <Sidebar />
-      <Signup />
+      <Sidebar page={page} />
+      <Signup page={page} />
     </AppEl>
   );
 };
