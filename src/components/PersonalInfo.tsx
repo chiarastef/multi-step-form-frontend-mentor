@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Title = styled.h2`
-  color: var(--title-color);
+  color: var(--primary-color);
   margin-bottom: 10px;
 `;
 

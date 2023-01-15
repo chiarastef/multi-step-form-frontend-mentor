@@ -1,4 +1,5 @@
 import React from "react";
+import { AppContext } from "../context";
 import Switch from "@mui/material/Switch";
 import styled from "styled-components";
 
@@ -38,6 +39,7 @@ const Option = styled.div`
   border: var(--border);
   border-radius: 10px;
   margin-top: 10px;
+  cursor: pointer;
 
   @media screen and (min-width: 768px) {
     flex-direction: column;
@@ -95,7 +97,7 @@ const Regularity = styled.div`
 `;
 
 const SelectPlan = () => {
-  const [isYearly, setIsYearly] = React.useState<boolean>(false);
+  const data = React.useContext(AppContext);
   const [planSelected, setPlanSelected] = React.useState<string>("");
 
   const plans = [
@@ -119,7 +121,7 @@ const SelectPlan = () => {
     },
   ];
 
-  const SelectPlan = (e: React.SyntheticEvent): void => {
+  const selectPlan = (e: React.SyntheticEvent): void => {
     // User can only select one
     // Before selecting another one the user has to deselect the selected one
     if (!planSelected) {
@@ -138,17 +140,17 @@ const SelectPlan = () => {
       <Options>
         {plans.map((plan, index) => {
           return (
-            <Option key={index} id={plan.type} onClick={(e) => SelectPlan(e)}>
+            <Option key={index} id={plan.type} onClick={selectPlan}>
               <img src={plan.image} alt={`${plan.type} plan icon`} />
               <OptionText>
                 <div>{plan.type}</div>
                 <div>
                   $
-                  {isYearly
+                  {data?.isYearly
                     ? plan.yearlyPrice + "/yr"
                     : plan.monthlyPrice + "/mo"}
                 </div>
-                {isYearly && <div>2 months free</div>}
+                {data?.isYearly && <div>2 months free</div>}
               </OptionText>
             </Option>
           );
@@ -157,8 +159,8 @@ const SelectPlan = () => {
       <Regularity>
         <span> Monthly</span>
         <Switch
-          checked={isYearly}
-          onChange={() => setIsYearly(!isYearly)}
+          checked={data?.isYearly}
+          onChange={() => data?.setIsYearly(!data?.isYearly)}
           color="default"
         />
         <span>Yearly</span>

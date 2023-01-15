@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { AppContext } from "../context";
 import PersonalInfo from "./PersonalInfo";
 import SelectPlan from "./SelectPlan";
+import SelectAddOns from "./SelectAddOns";
 import NavigationButtons from "./NavigationButtons";
 
 const Container = styled.div`
@@ -11,7 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   background-color: #ffffff;
   width: 90%;
-  padding: 30px 25px 20px;
+  padding: 30px 25px 25px;
   border-radius: 10px;
   margin: -70px auto 100px;
 
@@ -39,6 +40,13 @@ const Signup = () => {
       return (
         <Container>
           <SelectPlan />
+          <NavigationButtons />
+        </Container>
+      );
+    case 3:
+      return (
+        <Container>
+          <SelectAddOns />
           <NavigationButtons />
         </Container>
       );
