@@ -4,6 +4,8 @@ import styled from "styled-components";
 import mobileSidebarBg from "../images/bg-sidebar-mobile.svg";
 import desktopSidebarBg from "../images/bg-sidebar-desktop.svg";
 
+import { AppContext } from "../context";
+
 const Container = styled.div`
   background-color: #ffffff;
 
@@ -94,64 +96,60 @@ const LinkBtnDescr = styled.div`
   }
 `;
 
-interface Props {
-  page: number;
-}
+const Sidebar = () => {
+  const data = React.useContext(AppContext);
 
-const Sidebar = ({ page }: Props) => {
-  // Current page buttons
-  const link1 = React.useRef<HTMLButtonElement>(null);
-  const link2 = React.useRef<HTMLButtonElement>(null);
-  const link3 = React.useRef<HTMLButtonElement>(null);
-  const link4 = React.useRef<HTMLButtonElement>(null);
+  // Array of current page buttons
+  const links = React.useRef<(HTMLButtonElement | null)[]>([]);
 
   React.useEffect(() => {
-    // Add class "active" to current page
-    switch (page) {
-      case 1:
-        link1.current?.classList.add("active");
-        break;
-      case 2:
-        link2.current?.classList.add("active");
-        break;
-      case 3:
-        link3.current?.classList.add("active");
-        break;
-      case 4:
-        link4.current?.classList.add("active");
-        break;
-      default:
-        link1.current?.classList.add("active");
+    // Remove class active from each element
+    for (const link of links.current) {
+      link!.classList.remove("active");
     }
-  }, [page]);
+    // Add class "active" to current page
+    for (const link of links.current) {
+      if (data!.page === parseInt(link!.id)) {
+        link!.classList.add("active");
+      }
+    }
+  }, [data?.page]);
 
   return (
     <Container>
       <SidebarEl>
         <Navbar>
           <LinkContainer>
-            <LinkBtn ref={link1}>1</LinkBtn>
+            <LinkBtn ref={(el) => (links.current[0] = el)} id="1">
+              1
+            </LinkBtn>
             <LinkBtnDescr>
               <div>step 1</div>
               <div>your info</div>
             </LinkBtnDescr>
           </LinkContainer>
           <LinkContainer>
-            <LinkBtn ref={link2}>2</LinkBtn>
+            <LinkBtn ref={(el) => (links.current[1] = el)} id="2">
+              2
+            </LinkBtn>
             <LinkBtnDescr>
               <div>step 2</div>
               <div>select plan</div>
             </LinkBtnDescr>
           </LinkContainer>
           <LinkContainer>
-            <LinkBtn ref={link3}>3</LinkBtn>
+            <LinkBtn ref={(el) => (links.current[2] = el)} id="3">
+              3
+            </LinkBtn>
             <LinkBtnDescr>
               <div>step 3</div>
               <div>add-ons</div>
             </LinkBtnDescr>
           </LinkContainer>
           <LinkContainer>
-            <LinkBtn ref={link4}>4</LinkBtn>
+            <LinkBtn ref={(el) => (links.current[3] = el)} id="4">
+              4
+            </LinkBtn>
             <LinkBtnDescr>
               <div>step 4</div>
               <div>summary</div>

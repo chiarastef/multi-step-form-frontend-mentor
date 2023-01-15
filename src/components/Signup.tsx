@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import { AppContext } from "../context";
 import PersonalInfo from "./PersonalInfo";
 import SelectPlan from "./SelectPlan";
 import NavigationButtons from "./NavigationButtons";
@@ -24,9 +25,11 @@ const Container = styled.div`
   }
 `;
 
-const Signup = ({ page }: Props) => {
+const Signup = () => {
+  const data = React.useContext(AppContext);
+
   // Show page based on page prop
-  switch (page) {
+  switch (data?.page) {
     case 1:
       return (
         <Container>

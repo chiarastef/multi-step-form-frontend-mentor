@@ -17,12 +17,10 @@ const AppEl = styled.div`
 `;
 
 const App = () => {
-  const [page, setPage] = React.useState<number>(1);
-
   return (
     <AppEl>
-      <Sidebar page={page} />
-      <Signup page={page} />
+      <Sidebar />
+      <Signup />
     </AppEl>
   );
 };

@@ -34,7 +34,7 @@ const Input = styled.input`
 const SelectPlan = () => {
   return (
     <>
-      <Title>Selec Plan</Title>
+      <Title>Select Plan</Title>
       <Paragraph>
         Please provide your name, email address, and phone number.
       </Paragraph>

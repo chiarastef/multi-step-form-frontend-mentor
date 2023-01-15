@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { AppContext } from "../context";
+
 const NavigationBtns = styled.div`
   position: fixed;
   bottom: 0;
@@ -48,10 +50,28 @@ const NextBtn = styled.button`
 `;
 
 const NavigationButtons = () => {
+  const data = React.useContext(AppContext);
+
   return (
     <NavigationBtns>
-      <BackBtn>Go Back</BackBtn>
-      <NextBtn>Next Step</NextBtn>
+      <BackBtn
+        onClick={() => {
+          if (data?.page && data?.page > 1) {
+            data?.setPage(data?.page - 1);
+          }
+        }}
+      >
+        Go Back
+      </BackBtn>
+      <NextBtn
+        onClick={() => {
+          if (data?.page && data?.page < 4) {
+            data?.setPage(data?.page + 1);
+          }
+        }}
+      >
+        Next Step
+      </NextBtn>
     </NavigationBtns>
   );
 };
