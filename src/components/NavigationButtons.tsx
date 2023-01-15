@@ -16,7 +16,8 @@ const NavigationBtns = styled.div`
 
   @media screen and (min-width: 768px) {
     position: static;
-    margin-top: 50px;
+    padding: 0 18px;
+    margin-top: auto;
   }
 `;
 
@@ -27,6 +28,7 @@ const BackBtn = styled.button`
   color: var(--text-color);
   background-color: transparent;
   border: none;
+  cursor: pointer;
 
   @media screen and (min-width: 768px) {
     font-size: 16px;
@@ -42,6 +44,7 @@ const NextBtn = styled.button`
   padding: 14px;
   border: none;
   border-radius: 6px;
+  cursor: pointer;
 
   @media screen and (min-width: 768px) {
     font-size: 16px;
