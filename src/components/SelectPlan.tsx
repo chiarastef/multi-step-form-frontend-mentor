@@ -1,11 +1,9 @@
 import React from "react";
-import { AppContext } from "../context";
 import Switch from "@mui/material/Switch";
 import styled from "styled-components";
+import { AppContext } from "../context";
 
-import arcade from "../images/icon-arcade.svg";
-import advanced from "../images/icon-advanced.svg";
-import pro from "../images/icon-pro.svg";
+import { plans } from "../data/plansData";
 
 const Title = styled.h2`
   color: #02295a;
@@ -17,13 +15,13 @@ const Paragraph = styled.p`
   margin-bottom: 20px;
 `;
 
-const Options = styled.div`
+const Options = styled.form`
   display: flex;
   flex-direction: column;
 
   .selected {
     background-color: #fafbff;
-    border-color: #473dff;
+    border-color: var(--accent-color);
   }
 
   @media screen and (min-width: 768px) {
@@ -31,7 +29,7 @@ const Options = styled.div`
   }
 `;
 
-const Option = styled.div`
+const Option = styled.label`
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -40,6 +38,16 @@ const Option = styled.div`
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
+  transition: border-color 150ms ease-in;
+
+  &:hover {
+    border-color: var(--accent-color);
+  }
+
+  input {
+    width: 0;
+    visibility: hidden;
+  }
 
   @media screen and (min-width: 768px) {
     flex-direction: column;
@@ -97,40 +105,15 @@ const Regularity = styled.div`
 `;
 
 const SelectPlan = () => {
-  const data = React.useContext(AppContext);
-  const [planSelected, setPlanSelected] = React.useState<string>("");
+  const appContext = React.useContext(AppContext);
+  if (!appContext) return null;
+  const { planInfo, setPlanInfo } = appContext;
 
-  const plans = [
-    {
-      image: arcade,
-      type: "arcade",
-      monthlyPrice: 9,
-      yearlyPrice: 90,
-    },
-    {
-      image: advanced,
-      type: "advanced",
-      monthlyPrice: 12,
-      yearlyPrice: 120,
-    },
-    {
-      image: pro,
-      type: "pro",
-      monthlyPrice: 15,
-      yearlyPrice: 150,
-    },
-  ];
-
-  const selectPlan = (e: React.SyntheticEvent): void => {
-    // User can only select one
-    // Before selecting another one the user has to deselect the selected one
-    if (!planSelected) {
-      e.currentTarget.classList.add("selected");
-      setPlanSelected(e.currentTarget.id);
-    } else if (e.currentTarget.id === planSelected) {
-      e.currentTarget.classList.remove("selected");
-      setPlanSelected("");
-    }
+  const selectPlan = (e: React.FormEvent<HTMLInputElement>): void => {
+    setPlanInfo({
+      ...planInfo,
+      planName: (e.currentTarget.parentElement as HTMLLabelElement).id,
+    });
   };
 
   return (
@@ -140,17 +123,27 @@ const SelectPlan = () => {
       <Options>
         {plans.map((plan, index) => {
           return (
-            <Option key={index} id={plan.type} onClick={selectPlan}>
+            <Option
+              key={index}
+              id={plan.type}
+              className={plan.type === planInfo.planName ? "selected" : ""}
+            >
+              <input
+                type="radio"
+                name="plans"
+                checked={plan.type === planInfo.planName}
+                onChange={selectPlan}
+              />
               <img src={plan.image} alt={`${plan.type} plan icon`} />
               <OptionText>
                 <div>{plan.type}</div>
                 <div>
                   $
-                  {data?.isYearly
+                  {planInfo.isYearly
                     ? plan.yearlyPrice + "/yr"
                     : plan.monthlyPrice + "/mo"}
                 </div>
-                {data?.isYearly && <div>2 months free</div>}
+                {planInfo.isYearly && <div>2 months free</div>}
               </OptionText>
             </Option>
           );
@@ -159,8 +152,13 @@ const SelectPlan = () => {
       <Regularity>
         <span> Monthly</span>
         <Switch
-          checked={data?.isYearly}
-          onChange={() => data?.setIsYearly(!data?.isYearly)}
+          checked={planInfo.isYearly}
+          onChange={() =>
+            setPlanInfo({
+              ...planInfo,
+              isYearly: !planInfo.isYearly,
+            })
+          }
           color="default"
         />
         <span>Yearly</span>

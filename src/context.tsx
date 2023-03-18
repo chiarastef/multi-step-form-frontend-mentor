@@ -1,27 +1,59 @@
 import React from "react";
 
-interface ContextType {
+interface CurrentUserContextType {
+  formInfo: FormInfo;
+  setFormInfo: React.Dispatch<React.SetStateAction<FormInfo>>;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  isYearly: boolean;
-  setIsYearly: React.Dispatch<React.SetStateAction<boolean>>;
+  planInfo: PlanInfo;
+  setPlanInfo: React.Dispatch<React.SetStateAction<PlanInfo>>;
 }
 
 interface Props {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
-const AppContext = React.createContext<ContextType | null>(null);
+export interface PlanInfo {
+  planName: string;
+  isYearly: boolean;
+  addOns: string[];
+}
+
+interface FormInfo {
+  name: string;
+  email: string;
+  phoneNumber: string;
+}
+
+const AppContext = React.createContext<CurrentUserContextType | null>(null);
 
 const AppProvider = ({ children }: Props) => {
-  const [page, setPage] = React.useState<number>(3);
-  const [isYearly, setIsYearly] = React.useState<boolean>(false);
+  const [page, setPage] = React.useState<number>(1);
+  const [formInfo, setFormInfo] = React.useState<FormInfo>({
+    name: "",
+    email: "",
+    phoneNumber: "",
+  });
+  const [planInfo, setPlanInfo] = React.useState<PlanInfo>({
+    planName: "",
+    isYearly: false,
+    addOns: [],
+  });
 
   return (
-    <AppContext.Provider value={{ page, setPage, isYearly, setIsYearly }}>
+    <AppContext.Provider
+      value={{
+        page,
+        setPage,
+        formInfo,
+        setFormInfo,
+        planInfo,
+        setPlanInfo,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
 };
 
-export { AppProvider, AppContext };
+export { AppContext, AppProvider };

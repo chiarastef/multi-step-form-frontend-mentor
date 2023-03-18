@@ -1,6 +1,8 @@
 import React from "react";
-import { AppContext } from "../context";
 import styled from "styled-components";
+import { AppContext } from "../context";
+
+import { AddOns } from "../data/plansData";
 
 const Title = styled.h2`
   color: var(--primary-color);
@@ -29,6 +31,11 @@ const Option = styled.label`
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
+  transition: border-color 150ms ease-in;
+
+  &:hover {
+    border-color: var(--accent-color);
+  }
 `;
 
 const OptionInfo = styled.span`
@@ -55,42 +62,36 @@ const OptionPrice = styled.span`
   font-size: 13px;
 `;
 
+// interface SelectAddOnsProps {
+//   inputs: React.MutableRefObject<(HTMLInputElement | null)[]>;
+// }
+
 const SelectAddOns = () => {
-  const data = React.useContext(AppContext);
-  const [addOns, setAddOns] = React.useState([]);
+  const appContext = React.useContext(AppContext);
+  if (!appContext) return null;
+  const { planInfo, setPlanInfo } = appContext;
 
-  const AddOns = [
-    {
-      type: "Online service",
-      description: "Access to multiplayer games",
-      monthlyPrice: 1,
-      yearlyPrice: 10,
-    },
-    {
-      type: "Larger storage",
-      description: "Extra 1TB of cloud save",
-      monthlyPrice: 2,
-      yearlyPrice: 20,
-    },
-    {
-      type: "Customizable profile",
-      description: "Custom theme on your profile",
-      monthlyPrice: 2,
-      yearlyPrice: 20,
-    },
-  ];
+  const selectAddOn = (e: any): void => {
+    if (e.target.checked) {
+      setPlanInfo({ ...planInfo, addOns: [...planInfo.addOns, e.target.id] });
+    } else {
+      const addOnsArr = [...planInfo.addOns];
+      const deselectedItemIndex = addOnsArr.indexOf(e.target.id);
+      addOnsArr.splice(deselectedItemIndex, 1);
+      setPlanInfo({ ...planInfo, addOns: addOnsArr });
+    }
+  };
 
-  // const inputs = React.useRef<(HTMLInputElement | null)[]>([]);
-  //   inputs.current.map((input) => {
-  //     if (input?.checked) {
-  //       console.log(input);
-  //     }
-  //   });
+  const isSelected = (addOnForm: string): boolean => {
+    let isSelected = false;
 
-  const selectAddOn = (e: React.SyntheticEvent): void => {
-    // currentTarget = input checkbox
-    // Get grandparent of input to toggle class "selected" when clicked
-    e.currentTarget.parentElement?.parentElement?.classList.toggle("selected");
+    planInfo.addOns.forEach((addOn) => {
+      if (!isSelected && addOn === addOnForm) {
+        isSelected = true;
+      }
+    });
+
+    return isSelected;
   };
 
   return (
@@ -100,9 +101,17 @@ const SelectAddOns = () => {
       <AddOnsForm>
         {AddOns.map((addOn, index) => {
           return (
-            <Option key={index}>
+            <Option
+              key={index}
+              className={isSelected(addOn.type) ? "selected" : ""}
+            >
               <OptionInfo>
-                <input type="checkbox" id={addOn.type} onClick={selectAddOn} />
+                <input
+                  type="checkbox"
+                  id={addOn.type}
+                  checked={isSelected(addOn.type)}
+                  onChange={selectAddOn}
+                />
                 <OptionText>
                   <span>{addOn.type}</span>
                   <br />
@@ -111,7 +120,7 @@ const SelectAddOns = () => {
               </OptionInfo>
               <OptionPrice>
                 +$
-                {data?.isYearly
+                {planInfo.isYearly
                   ? addOn.yearlyPrice + "/yr"
                   : addOn.monthlyPrice + "/mo"}
               </OptionPrice>

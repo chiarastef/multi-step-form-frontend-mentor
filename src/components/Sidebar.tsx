@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { AppContext } from "../context";
 
 import mobileSidebarBg from "../images/bg-sidebar-mobile.svg";
 import desktopSidebarBg from "../images/bg-sidebar-desktop.svg";
-
-import { AppContext } from "../context";
 
 const Container = styled.div`
   background-color: #ffffff;
@@ -97,7 +96,9 @@ const LinkBtnDescr = styled.div`
 `;
 
 const Sidebar = () => {
-  const data = React.useContext(AppContext);
+  const appContext = React.useContext(AppContext);
+  if (!appContext) return null;
+  const { page } = appContext;
 
   // Array of current page buttons
   const links = React.useRef<(HTMLButtonElement | null)[]>([]);
@@ -105,15 +106,17 @@ const Sidebar = () => {
   React.useEffect(() => {
     // Remove class active from each element
     for (const link of links.current) {
-      link!.classList.remove("active");
+      if (link) {
+        link.classList.remove("active");
+      }
     }
     // Add class "active" to current page
     for (const link of links.current) {
-      if (data!.page === parseInt(link!.id)) {
-        link!.classList.add("active");
+      if (link && page === parseInt(link!.id)) {
+        link.classList.add("active");
       }
     }
-  }, [data?.page]);
+  }, [page]);
 
   return (
     <Container>

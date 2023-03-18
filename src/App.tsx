@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { AppContext } from "./context";
 
 import Sidebar from "./components/Sidebar";
 import Signup from "./components/Signup";

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
 import { AppContext } from "../context";
 
 const NavigationBtns = styled.div`
@@ -29,6 +28,11 @@ const BackBtn = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  transition: color 150ms ease-in;
+
+  &:hover {
+    color: var(--primary-color);
+  }
 
   @media screen and (min-width: 768px) {
     font-size: 16px;
@@ -45,6 +49,11 @@ const NextBtn = styled.button`
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 150ms ease-in;
+
+  &:hover {
+    background-color: var(--accent-color);
+  }
 
   @media screen and (min-width: 768px) {
     font-size: 16px;
@@ -53,14 +62,16 @@ const NextBtn = styled.button`
 `;
 
 const NavigationButtons = () => {
-  const data = React.useContext(AppContext);
+  const appContext = React.useContext(AppContext);
+  if (!appContext) return null;
+  const { page, setPage } = appContext;
 
   return (
     <NavigationBtns>
       <BackBtn
         onClick={() => {
-          if (data?.page && data?.page > 1) {
-            data?.setPage(data?.page - 1);
+          if (page && page > 1) {
+            setPage(page - 1);
           }
         }}
       >
@@ -68,12 +79,12 @@ const NavigationButtons = () => {
       </BackBtn>
       <NextBtn
         onClick={() => {
-          if (data?.page && data?.page < 4) {
-            data?.setPage(data?.page + 1);
+          if (page && page < 4) {
+            setPage(page + 1);
           }
         }}
       >
-        Next Step
+        {page === 4 ? "Confirm" : "Next Step"}
       </NextBtn>
     </NavigationBtns>
   );

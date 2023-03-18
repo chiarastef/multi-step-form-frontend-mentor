@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { AppContext } from "../context";
 
 const Title = styled.h2`
   color: var(--primary-color);
@@ -29,9 +30,16 @@ const Input = styled.input`
   border: 1px solid #9699ab;
   border-radius: 4px;
   margin-top: 5px;
+  &:focus-visible {
+    border: 0 solid var(--accent-color);
+  }
 `;
 
 const PersonalInfo = () => {
+  const appContext = React.useContext(AppContext);
+  if (!appContext) return null;
+  const { formInfo, setFormInfo } = appContext;
+
   return (
     <>
       <Title>Personal Info</Title>
@@ -41,15 +49,37 @@ const PersonalInfo = () => {
       <form>
         <Label>
           Name
-          <Input type="text" placeholder="e.g Stephen King" />
+          <Input
+            type="text"
+            placeholder="e.g Stephen King"
+            required
+            value={formInfo.name}
+            onChange={(e) => setFormInfo({ ...formInfo, name: e.target.value })}
+          />
         </Label>
         <Label>
           Email Address
-          <Input type="email" placeholder="e.g stephenking@lorem.com" />
+          <Input
+            type="email"
+            required
+            placeholder="e.g stephenking@lorem.com"
+            value={formInfo.email}
+            onChange={(e) =>
+              setFormInfo({ ...formInfo, email: e.target.value })
+            }
+          />
         </Label>
         <Label>
           Phone Number
-          <Input type="text" placeholder="e.g. +1 234 567 890" />
+          <Input
+            type="text"
+            placeholder="e.g. +1 234 567 890"
+            required
+            value={formInfo.phoneNumber}
+            onChange={(e) =>
+              setFormInfo({ ...formInfo, phoneNumber: e.target.value })
+            }
+          />
         </Label>
       </form>
     </>

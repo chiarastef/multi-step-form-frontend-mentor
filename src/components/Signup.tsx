@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-
 import { AppContext } from "../context";
+
 import PersonalInfo from "./PersonalInfo";
 import SelectPlan from "./SelectPlan";
 import SelectAddOns from "./SelectAddOns";
+import Summary from "./Summary";
 import NavigationButtons from "./NavigationButtons";
 
 const Container = styled.div`
@@ -25,39 +26,31 @@ const Container = styled.div`
 `;
 
 const Signup = () => {
-  const data = React.useContext(AppContext);
+  const appContext = React.useContext(AppContext);
+  if (!appContext) return null;
+  const { page } = appContext;
 
-  // Show page
-  switch (data?.page) {
-    case 1:
-      return (
-        <Container>
-          <PersonalInfo />
-          <NavigationButtons />
-        </Container>
-      );
-    case 2:
-      return (
-        <Container>
-          <SelectPlan />
-          <NavigationButtons />
-        </Container>
-      );
-    case 3:
-      return (
-        <Container>
-          <SelectAddOns />
-          <NavigationButtons />
-        </Container>
-      );
-    default:
-      return (
-        <Container>
-          <PersonalInfo />
-          <NavigationButtons />
-        </Container>
-      );
-  }
+  const renderPage = () => {
+    switch (page) {
+      case 1:
+        return <PersonalInfo />;
+      case 2:
+        return <SelectPlan />;
+      case 3:
+        return <SelectAddOns />;
+      case 4:
+        return <Summary />;
+      default:
+        return <PersonalInfo />;
+    }
+  };
+
+  return (
+    <Container>
+      {renderPage()}
+      <NavigationButtons />
+    </Container>
+  );
 };
 
 export default Signup;
