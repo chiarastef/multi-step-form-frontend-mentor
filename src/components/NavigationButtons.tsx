@@ -66,24 +66,22 @@ const NavigationButtons = () => {
   if (!appContext) return null;
   const { page, setPage } = appContext;
 
+  const goToPreviousPage = (): void => {
+    if (page && page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const goToNextPage = (): void => {
+    if (page && page < 4) {
+      setPage(page + 1);
+    }
+  };
+
   return (
     <NavigationBtns>
-      <BackBtn
-        onClick={() => {
-          if (page && page > 1) {
-            setPage(page - 1);
-          }
-        }}
-      >
-        Go Back
-      </BackBtn>
-      <NextBtn
-        onClick={() => {
-          if (page && page < 4) {
-            setPage(page + 1);
-          }
-        }}
-      >
+      <BackBtn onClick={goToPreviousPage}>Go Back</BackBtn>
+      <NextBtn onClick={goToNextPage}>
         {page === 4 ? "Confirm" : "Next Step"}
       </NextBtn>
     </NavigationBtns>

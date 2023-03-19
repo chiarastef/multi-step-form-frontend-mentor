@@ -98,62 +98,85 @@ const Summary = () => {
   if (!appContext) return null;
   const { planInfo, setPage } = appContext;
 
-  const planSelected = plans.filter((plan) => planInfo.planName === plan.type);
-  const planPrice = planInfo.isYearly
-    ? planSelected[0].yearlyPrice
-    : planSelected[0].monthlyPrice;
+  let planPrice = 0;
+  let total = 0;
 
-  let total = planPrice;
+  // Get summary data only if user selected a plan
+  if (planInfo.planName) {
+    const planSelected = plans.filter(
+      (plan) => planInfo.planName === plan.type
+    );
+    planPrice = planInfo.isYearly
+      ? planSelected[0].yearlyPrice
+      : planSelected[0].monthlyPrice;
 
-  return (
-    <>
-      <Title>Finishing up</Title>
-      <Paragraph>Double-check everything looks OK before confirming.</Paragraph>
-      <SummaryEl>
-        <Plan>
+    total = planPrice;
+  }
+
+  if (planInfo.planName) {
+    return (
+      <>
+        <Title>Finishing up</Title>
+        <Paragraph>
+          Double-check everything looks OK before confirming.
+        </Paragraph>
+        <SummaryEl>
+          <Plan>
+            <div>
+              <PlanName>
+                {planInfo.planName} ({planInfo.isYearly ? "yearly" : "monthly"})
+              </PlanName>
+              <ChangeBtn onClick={() => setPage(2)}>Change</ChangeBtn>
+            </div>
+            <div>
+              ${planPrice}/{planInfo.isYearly ? "yr" : "mo"}
+            </div>
+          </Plan>
+          <AddOnsContainer>
+            {planInfo.addOns.length > 0
+              ? planInfo.addOns.map((addOn) => {
+                  const addOnsSelected = AddOns.filter(
+                    (addOnData) => addOn === addOnData.type
+                  );
+                  const addOnPrice = planInfo.isYearly
+                    ? addOnsSelected[0].yearlyPrice
+                    : addOnsSelected[0].monthlyPrice;
+
+                  total += addOnPrice;
+
+                  return (
+                    <AddOn>
+                      <div>{addOn}</div>
+                      <div>
+                        +${addOnPrice}/{planInfo.isYearly ? "yr" : "mo"}
+                      </div>
+                    </AddOn>
+                  );
+                })
+              : "No add-ons selected."}
+          </AddOnsContainer>
+        </SummaryEl>
+        <Total>
+          <div>Total (per {planInfo.isYearly ? "year" : "month"})</div>
           <div>
-            <PlanName>
-              {planInfo.planName} ({planInfo.isYearly ? "yearly" : "monthly"})
-            </PlanName>
-            <ChangeBtn onClick={() => setPage(2)}>Change</ChangeBtn>
+            +${total}/{planInfo.isYearly ? "yr" : "mo"}
           </div>
-          <div>
-            ${planPrice}/{planInfo.isYearly ? "yr" : "mo"}
-          </div>
-        </Plan>
-        <AddOnsContainer>
-          {planInfo.addOns.length > 0
-            ? planInfo.addOns.map((addOn) => {
-                const addOnSelected = AddOns.filter(
-                  (addOnData) => addOn === addOnData.type
-                );
-                const addOnPrice = planInfo.isYearly
-                  ? addOnSelected[0].yearlyPrice
-                  : addOnSelected[0].monthlyPrice;
-
-                total += addOnPrice;
-
-                return (
-                  <AddOn>
-                    <div>{addOn}</div>
-                    <div>
-                      +${addOnPrice}/{planInfo.isYearly ? "yr" : "mo"}
-                    </div>
-                  </AddOn>
-                );
-              })
-            : "No add-ons selected."}
-        </AddOnsContainer>
-      </SummaryEl>
-      <Total>
-        <div>Total (per {planInfo.isYearly ? "year" : "month"})</div>
-        <div>
-          {" "}
-          +${total}/{planInfo.isYearly ? "yr" : "mo"}
-        </div>
-      </Total>
-    </>
-  );
+        </Total>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Title>Finishing up</Title>
+        <Paragraph>
+          Double-check everything looks OK before confirming.
+        </Paragraph>
+        <SummaryEl>
+          Please, fill up the form to see the summary and confirm.
+        </SummaryEl>
+      </>
+    );
+  }
 };
 
 export default Summary;

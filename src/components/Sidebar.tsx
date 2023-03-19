@@ -43,6 +43,8 @@ const Navbar = styled.nav`
 `;
 
 const LinkContainer = styled.div`
+  cursor: pointer;
+
   @media screen and (min-width: 768px) {
     display: flex;
     align-items: center;
@@ -63,6 +65,7 @@ const LinkBtn = styled.button`
   border: 1px solid #bfe2fd;
   border-radius: 50%;
   margin: 8px;
+  cursor: pointer;
 
   @media screen and (min-width: 768px) {
     width: 26px;
@@ -98,32 +101,31 @@ const LinkBtnDescr = styled.div`
 const Sidebar = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { page } = appContext;
+  const { page, setPage } = appContext;
 
-  // Array of current page buttons
-  const links = React.useRef<(HTMLButtonElement | null)[]>([]);
+  // Array of page buttons
+  const buttons = React.useRef<(HTMLButtonElement | null)[]>([]);
 
   React.useEffect(() => {
     // Remove class active from each element
-    for (const link of links.current) {
-      if (link) {
-        link.classList.remove("active");
-      }
-    }
+    buttons.current.forEach((button) => {
+      button && button.classList.remove("active");
+    });
+
     // Add class "active" to current page
-    for (const link of links.current) {
-      if (link && page === parseInt(link!.id)) {
-        link.classList.add("active");
+    buttons.current.forEach((button) => {
+      if (button && page === parseInt(button.id)) {
+        button.classList.add("active");
       }
-    }
+    });
   }, [page]);
 
   return (
     <Container>
       <SidebarEl>
         <Navbar>
-          <LinkContainer>
-            <LinkBtn ref={(el) => (links.current[0] = el)} id="1">
+          <LinkContainer onClick={() => setPage(1)}>
+            <LinkBtn ref={(el) => (buttons.current[0] = el)} id="1">
               1
             </LinkBtn>
             <LinkBtnDescr>
@@ -131,8 +133,8 @@ const Sidebar = () => {
               <div>your info</div>
             </LinkBtnDescr>
           </LinkContainer>
-          <LinkContainer>
-            <LinkBtn ref={(el) => (links.current[1] = el)} id="2">
+          <LinkContainer onClick={() => setPage(2)}>
+            <LinkBtn ref={(el) => (buttons.current[1] = el)} id="2">
               2
             </LinkBtn>
             <LinkBtnDescr>
@@ -140,8 +142,8 @@ const Sidebar = () => {
               <div>select plan</div>
             </LinkBtnDescr>
           </LinkContainer>
-          <LinkContainer>
-            <LinkBtn ref={(el) => (links.current[2] = el)} id="3">
+          <LinkContainer onClick={() => setPage(3)}>
+            <LinkBtn ref={(el) => (buttons.current[2] = el)} id="3">
               3
             </LinkBtn>
             <LinkBtnDescr>
@@ -149,8 +151,8 @@ const Sidebar = () => {
               <div>add-ons</div>
             </LinkBtnDescr>
           </LinkContainer>
-          <LinkContainer>
-            <LinkBtn ref={(el) => (links.current[3] = el)} id="4">
+          <LinkContainer onClick={() => setPage(4)}>
+            <LinkBtn ref={(el) => (buttons.current[3] = el)} id="4">
               4
             </LinkBtn>
             <LinkBtnDescr>

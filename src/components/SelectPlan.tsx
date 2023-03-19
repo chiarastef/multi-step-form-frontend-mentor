@@ -109,10 +109,11 @@ const SelectPlan = () => {
   if (!appContext) return null;
   const { planInfo, setPlanInfo } = appContext;
 
-  const selectPlan = (e: React.FormEvent<HTMLInputElement>): void => {
+  // Update planInfo state when user selects planInfo
+  const selectPlan = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setPlanInfo({
       ...planInfo,
-      planName: (e.currentTarget.parentElement as HTMLLabelElement).id,
+      planName: (e.target.parentElement as HTMLLabelElement).id,
     });
   };
 

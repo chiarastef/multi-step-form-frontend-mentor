@@ -62,16 +62,13 @@ const OptionPrice = styled.span`
   font-size: 13px;
 `;
 
-// interface SelectAddOnsProps {
-//   inputs: React.MutableRefObject<(HTMLInputElement | null)[]>;
-// }
-
 const SelectAddOns = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
   const { planInfo, setPlanInfo } = appContext;
 
-  const selectAddOn = (e: any): void => {
+  // Update planInfo state when user selects options
+  const selectAddOn = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.checked) {
       setPlanInfo({ ...planInfo, addOns: [...planInfo.addOns, e.target.id] });
     } else {
@@ -82,6 +79,7 @@ const SelectAddOns = () => {
     }
   };
 
+  // Check if option is selected to add 'selected' class
   const isSelected = (addOnForm: string): boolean => {
     let isSelected = false;
 
