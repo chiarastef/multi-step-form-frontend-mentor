@@ -64,7 +64,7 @@ const NextBtn = styled.button`
 const NavigationButtons = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { page, setPage } = appContext;
+  const { page, setPage, setShowConfirmation } = appContext;
 
   const goToPreviousPage = (): void => {
     if (page && page > 1) {
@@ -75,6 +75,9 @@ const NavigationButtons = () => {
   const goToNextPage = (): void => {
     if (page && page < 4) {
       setPage(page + 1);
+    }
+    if (page === 4) {
+      setShowConfirmation(true);
     }
   };
 

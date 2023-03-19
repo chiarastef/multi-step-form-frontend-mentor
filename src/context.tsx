@@ -7,6 +7,8 @@ interface CurrentUserContextType {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   planInfo: PlanInfo;
   setPlanInfo: React.Dispatch<React.SetStateAction<PlanInfo>>;
+  showConfirmation: boolean;
+  setShowConfirmation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Props {
@@ -39,6 +41,8 @@ const AppProvider = ({ children }: Props) => {
     isYearly: false,
     addOns: [],
   });
+  const [showConfirmation, setShowConfirmation] =
+    React.useState<boolean>(false);
 
   return (
     <AppContext.Provider
@@ -49,6 +53,8 @@ const AppProvider = ({ children }: Props) => {
         setFormInfo,
         planInfo,
         setPlanInfo,
+        showConfirmation,
+        setShowConfirmation,
       }}
     >
       {children}

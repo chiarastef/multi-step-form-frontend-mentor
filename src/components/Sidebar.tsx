@@ -101,23 +101,25 @@ const LinkBtnDescr = styled.div`
 const Sidebar = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { page, setPage } = appContext;
+  const { page, setPage, showConfirmation } = appContext;
 
   // Array of page buttons
   const buttons = React.useRef<(HTMLButtonElement | null)[]>([]);
 
   React.useEffect(() => {
-    // Remove class active from each element
-    buttons.current.forEach((button) => {
-      button && button.classList.remove("active");
-    });
+    if (!showConfirmation) {
+      // Remove class active from each element
+      buttons.current.forEach((button) => {
+        button && button.classList.remove("active");
+      });
 
-    // Add class "active" to current page
-    buttons.current.forEach((button) => {
-      if (button && page === parseInt(button.id)) {
-        button.classList.add("active");
-      }
-    });
+      // Add class "active" to current page
+      buttons.current.forEach((button) => {
+        if (button && page === parseInt(button.id)) {
+          button.classList.add("active");
+        }
+      });
+    }
   }, [page]);
 
   return (

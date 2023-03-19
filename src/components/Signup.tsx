@@ -6,6 +6,7 @@ import PersonalInfo from "./PersonalInfo";
 import SelectPlan from "./SelectPlan";
 import SelectAddOns from "./SelectAddOns";
 import Summary from "./Summary";
+import Confirmation from "./Confirmation";
 import NavigationButtons from "./NavigationButtons";
 
 const Container = styled.div`
@@ -28,7 +29,7 @@ const Container = styled.div`
 const Signup = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { page } = appContext;
+  const { page, showConfirmation } = appContext;
 
   const renderPage = () => {
     switch (page) {
@@ -47,8 +48,14 @@ const Signup = () => {
 
   return (
     <Container>
-      {renderPage()}
-      <NavigationButtons />
+      {showConfirmation ? (
+        <Confirmation />
+      ) : (
+        <>
+          {renderPage()}
+          <NavigationButtons />
+        </>
+      )}
     </Container>
   );
 };
