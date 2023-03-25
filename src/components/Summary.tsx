@@ -2,17 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import { AppContext } from "../context";
 
-import { plans } from "../data/plansData";
+import { Plans } from "../data/plansData";
 import { AddOns } from "../data/plansData";
 
 const Title = styled.h2`
+  font-size: var(--title-font-size-mobile);
   color: var(--primary-color);
   margin-bottom: 10px;
 `;
 
 const Paragraph = styled.p`
+  font-size: var(--text-font-size-mobile);
   color: var(--text-color);
-  margin-bottom: 20px;
+  margin-bottom: var(--margin-mobile);
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: var(--margin-tablet);
+  }
 `;
 
 const SummaryEl = styled.div`
@@ -30,7 +36,7 @@ const Plan = styled.div`
 
   div:not(button) {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     color: var(--primary-color);
   }
 `;
@@ -81,10 +87,10 @@ const Total = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 14px;
   padding: 15px;
 
   div:first-of-type {
-    font-size: 14px;
     color: var(--text-color);
   }
 
@@ -103,7 +109,7 @@ const Summary = () => {
 
   // Get summary data only if user selected a plan
   if (planInfo.planName) {
-    const planSelected = plans.filter(
+    const planSelected = Plans.filter(
       (plan) => planInfo.planName === plan.type
     );
     planPrice = planInfo.isYearly

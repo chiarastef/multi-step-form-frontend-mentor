@@ -4,6 +4,10 @@
   --accent-color: #473dff;
   --text-color: #9699ab;
   --border: 1px solid #d6d9e6;
+  --title-font-size-mobile: 22px;
+  --text-font-size-mobile: 15px;
+  --margin-mobile: 12px;
+  --margin-tablet: 15px;
 }
 
 /* Reset */

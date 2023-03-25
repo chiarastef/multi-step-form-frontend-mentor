@@ -3,16 +3,22 @@ import Switch from "@mui/material/Switch";
 import styled from "styled-components";
 import { AppContext } from "../context";
 
-import { plans } from "../data/plansData";
+import { Plans } from "../data/plansData";
 
 const Title = styled.h2`
+  font-size: var(--title-font-size-mobile);
   color: #02295a;
   margin-bottom: 10px;
 `;
 
 const Paragraph = styled.p`
+  font-size: var(--text-font-size-mobile);
   color: #9699ab;
-  margin-bottom: 20px;
+  margin-bottom: var(--margin-mobile);
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: var(--margin-tablet);
+  }
 `;
 
 const Options = styled.form`
@@ -31,9 +37,9 @@ const Options = styled.form`
 
 const Option = styled.label`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
-  padding: 15px;
+  padding: 8px;
   border: var(--border);
   border-radius: 10px;
   margin-top: 10px;
@@ -46,11 +52,14 @@ const Option = styled.label`
 
   input {
     width: 0;
+    height: 0;
     visibility: hidden;
   }
 
   @media screen and (min-width: 768px) {
     flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
 
     /* Add margin to all plan options except last one */
     &:not(&:last-of-type) {
@@ -63,13 +72,14 @@ const OptionText = styled.div`
   margin-left: 12px;
 
   div:nth-child(1) {
+    font-size: var(--text-font-size-mobile);
     font-weight: 700;
     text-transform: capitalize;
     color: var(--primary-color);
   }
 
   div:nth-child(2) {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-color);
     margin-top: 4px;
   }
@@ -88,12 +98,12 @@ const OptionText = styled.div`
 `;
 
 const Regularity = styled.div`
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   text-align: center;
   background-color: #fafbff;
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: var(--margin-mobile);
 
   span:first-of-type {
     color: var(--primary-color);
@@ -101,6 +111,10 @@ const Regularity = styled.div`
 
   span:last-of-type {
     color: var(--text-color);
+  }
+
+  @media screen and (min-width: 768px) {
+    margin-top: 20px;
   }
 `;
 
@@ -122,7 +136,7 @@ const SelectPlan = () => {
       <Title>Select Plan</Title>
       <Paragraph>You have the option of monthly or yearly billing.</Paragraph>
       <Options>
-        {plans.map((plan, index) => {
+        {Plans.map((plan, index) => {
           return (
             <Option
               key={index}

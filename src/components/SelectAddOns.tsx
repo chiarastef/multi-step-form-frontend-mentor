@@ -5,13 +5,19 @@ import { AppContext } from "../context";
 import { AddOns } from "../data/plansData";
 
 const Title = styled.h2`
+  font-size: var(--title-font-size-mobile);
   color: var(--primary-color);
   margin-bottom: 10px;
 `;
 
 const Paragraph = styled.p`
+  font-size: var(--text-font-size-mobile);
   color: var(--text-color);
-  margin-bottom: 20px;
+  margin-bottom: var(--margin-mobile);
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: var(--margin-tablet);
+  }
 `;
 
 const AddOnsForm = styled.form`
@@ -43,6 +49,7 @@ const OptionInfo = styled.span`
 `;
 
 const OptionText = styled.span`
+  font-size: var(--text-font-size-mobile);
   margin-left: 13px;
 
   span:first-of-type {
@@ -59,7 +66,7 @@ const OptionText = styled.span`
 
 const OptionPrice = styled.span`
   color: #473dff;
-  font-size: 13px;
+  font-size: 12px;
 `;
 
 const SelectAddOns = () => {

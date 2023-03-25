@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const SidebarEl = styled.div`
-  height: 170px;
+  height: 160px;
   background: center / cover no-repeat url(${mobileSidebarBg});
   padding-top: 25px;
 
@@ -53,11 +53,10 @@ const LinkContainer = styled.div`
 `;
 
 const LinkBtn = styled.button`
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   font-family: inherit;
-  font-size: 18px;
-  text-align: center;
+  font-size: 14px;
   font-weight: 700;
   color: #ffffff;
   background-color: transparent;
@@ -68,9 +67,9 @@ const LinkBtn = styled.button`
   cursor: pointer;
 
   @media screen and (min-width: 768px) {
-    width: 26px;
-    height: 26px;
-    font-size: 11px;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
     font-weight: 500;
   }
 `;
@@ -85,6 +84,7 @@ const LinkBtnDescr = styled.div`
 
   @media screen and (min-width: 768px) {
     display: block;
+    font-size: 10px;
   }
 
   div:first-of-type {

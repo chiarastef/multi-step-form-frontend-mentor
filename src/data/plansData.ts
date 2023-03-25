@@ -2,7 +2,7 @@ import arcade from "../images/icon-arcade.svg";
 import advanced from "../images/icon-advanced.svg";
 import pro from "../images/icon-pro.svg";
 
-export const plans = [
+export const Plans = [
   {
     image: arcade,
     type: "arcade",

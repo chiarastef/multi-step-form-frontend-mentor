@@ -3,13 +3,19 @@ import styled from "styled-components";
 import { AppContext } from "../context";
 
 const Title = styled.h2`
+  font-size: var(--title-font-size-mobile);
   color: var(--primary-color);
   margin-bottom: 10px;
 `;
 
 const Paragraph = styled.p`
+  font-size: var(--text-font-size-mobile);
   color: var(--text-color);
-  margin-bottom: 20px;
+  margin-bottom: var(--margin-mobile);
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: var(--margin-tablet);
+  }
 `;
 
 const Label = styled.label`
@@ -23,15 +29,20 @@ const Label = styled.label`
 const Input = styled.input`
   display: block;
   width: 100%;
-  font-size: 15px;
+  font-size: 14px;
   font-family: inherit;
   color: #9699ab;
   padding: 10px;
   border: 1px solid #9699ab;
   border-radius: 4px;
   margin-top: 5px;
+
   &:focus-visible {
     border: 0 solid var(--accent-color);
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 15px;
   }
 `;
 

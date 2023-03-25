@@ -13,21 +13,21 @@ const ConfirmatioSection = styled.section`
 `;
 
 const Icon = styled.img`
-  width: 70px;
-`;
+  width: 65px;
 
-const Title = styled.h2`
-  font-size: 22px;
-  color: var(--primary-color);
-  margin-top: 25px;
-
-  @media screen and (min-width: 768px) {
-    font-size: 25px;
+  @media screen and (min-width: 1024px) {
+    width: 70px;
   }
 `;
 
+const Title = styled.h2`
+  font-size: var(--title-font-size-mobile);
+  color: var(--primary-color);
+  margin-top: 25px;
+`;
+
 const Paragraph = styled.p`
-  font-size: 15px;
+  font-size: var(--text-font-size-mobile);
   line-height: 1.5;
   color: var(--text-color);
   padding: 0 10px;

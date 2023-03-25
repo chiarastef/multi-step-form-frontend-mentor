@@ -11,18 +11,18 @@ const NavigationBtns = styled.div`
   justify-content: space-between;
   background-color: #ffffff;
   width: 100%;
-  padding: 18px;
+  padding: 10px;
 
   @media screen and (min-width: 768px) {
     position: static;
-    padding: 0 18px;
+    padding: 0;
     margin-top: auto;
   }
 `;
 
 const BackBtn = styled.button`
   font-family: inherit;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-color);
   background-color: transparent;
@@ -33,19 +33,15 @@ const BackBtn = styled.button`
   &:hover {
     color: var(--primary-color);
   }
-
-  @media screen and (min-width: 768px) {
-    font-size: 16px;
-  }
 `;
 
 const NextBtn = styled.button`
   font-family: inherit;
-  font-size: 17px;
+  font-size: 14px;
   color: #ffffff;
   letter-spacing: 0.5px;
   background-color: var(--primary-color);
-  padding: 14px;
+  padding: 10px 8px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -56,8 +52,7 @@ const NextBtn = styled.button`
   }
 
   @media screen and (min-width: 768px) {
-    font-size: 16px;
-    padding: 12px 20px;
+    padding: 12px 10px;
   }
 `;
 
