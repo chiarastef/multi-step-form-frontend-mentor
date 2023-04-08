@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import thankYouIcon from "../images/icon-thank-you.svg";
 

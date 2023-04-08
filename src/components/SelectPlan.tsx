@@ -21,6 +21,16 @@ const Paragraph = styled.p`
   }
 `;
 
+const ErrorParagraph = styled.p`
+  font-size: 12px;
+  color: #d32f2f;
+  margin-bottom: var(--margin-mobile);
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: var(--margin-tablet);
+  }
+`;
+
 const Options = styled.form`
   display: flex;
   flex-direction: column;
@@ -121,7 +131,7 @@ const Regularity = styled.div`
 const SelectPlan = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { planInfo, setPlanInfo } = appContext;
+  const { planInfo, setPlanInfo, wasPlanSelected } = appContext;
 
   // Update planInfo state when user selects planInfo
   const selectPlan = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -135,6 +145,9 @@ const SelectPlan = () => {
     <>
       <Title>Select Plan</Title>
       <Paragraph>You have the option of monthly or yearly billing.</Paragraph>
+      {wasPlanSelected && !planInfo.planName && (
+        <ErrorParagraph>Please select a plan</ErrorParagraph>
+      )}
       <Options>
         {Plans.map((plan, index) => {
           return (

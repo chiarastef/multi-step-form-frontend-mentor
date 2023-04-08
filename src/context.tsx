@@ -1,12 +1,16 @@
 import React from "react";
 
 interface CurrentUserContextType {
-  formInfo: FormInfo;
-  setFormInfo: React.Dispatch<React.SetStateAction<FormInfo>>;
+  personalInfo: FormInfo;
+  setPersonalInfo: React.Dispatch<React.SetStateAction<FormInfo>>;
+  personalFormSubmitted: boolean;
+  setPersonalFormSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   planInfo: PlanInfo;
   setPlanInfo: React.Dispatch<React.SetStateAction<PlanInfo>>;
+  wasPlanSelected: boolean;
+  setWasPlanSelected: React.Dispatch<React.SetStateAction<boolean>>;
   showConfirmation: boolean;
   setShowConfirmation: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -31,16 +35,19 @@ const AppContext = React.createContext<CurrentUserContextType | null>(null);
 
 const AppProvider = ({ children }: Props) => {
   const [page, setPage] = React.useState<number>(1);
-  const [formInfo, setFormInfo] = React.useState<FormInfo>({
+  const [personalInfo, setPersonalInfo] = React.useState<FormInfo>({
     name: "",
     email: "",
     phoneNumber: "",
   });
+  const [personalFormSubmitted, setPersonalFormSubmitted] =
+    React.useState<boolean>(false);
   const [planInfo, setPlanInfo] = React.useState<PlanInfo>({
     planName: "",
     isYearly: false,
     addOns: [],
   });
+  const [wasPlanSelected, setWasPlanSelected] = React.useState<boolean>(false);
   const [showConfirmation, setShowConfirmation] =
     React.useState<boolean>(false);
 
@@ -49,10 +56,14 @@ const AppProvider = ({ children }: Props) => {
       value={{
         page,
         setPage,
-        formInfo,
-        setFormInfo,
+        personalInfo,
+        setPersonalInfo,
+        personalFormSubmitted,
+        setPersonalFormSubmitted,
         planInfo,
         setPlanInfo,
+        wasPlanSelected,
+        setWasPlanSelected,
         showConfirmation,
         setShowConfirmation,
       }}

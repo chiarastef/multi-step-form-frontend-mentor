@@ -101,7 +101,15 @@ const LinkBtnDescr = styled.div`
 const Sidebar = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { page, setPage, showConfirmation } = appContext;
+  const {
+    page,
+    setPage,
+    showConfirmation,
+    setPersonalFormSubmitted,
+    personalInfo,
+    setWasPlanSelected,
+    planInfo,
+  } = appContext;
 
   // Array of page buttons
   const buttons = React.useRef<(HTMLButtonElement | null)[]>([]);
@@ -122,6 +130,20 @@ const Sidebar = () => {
     }
   }, [page]);
 
+  const goToSecondPage = () => {
+    setPersonalFormSubmitted(true);
+    if (personalInfo.name && personalInfo.email && personalInfo.phoneNumber) {
+      setPage(2);
+    }
+  };
+
+  const goToThirdPage = () => {
+    setWasPlanSelected(true);
+    if (planInfo.planName) {
+      setPage(3);
+    }
+  };
+
   return (
     <Container>
       <SidebarEl>
@@ -135,7 +157,7 @@ const Sidebar = () => {
               <div>your info</div>
             </LinkBtnDescr>
           </LinkContainer>
-          <LinkContainer onClick={() => setPage(2)}>
+          <LinkContainer onClick={goToSecondPage}>
             <LinkBtn ref={(el) => (buttons.current[1] = el)} id="2">
               2
             </LinkBtn>
@@ -144,7 +166,7 @@ const Sidebar = () => {
               <div>select plan</div>
             </LinkBtnDescr>
           </LinkContainer>
-          <LinkContainer onClick={() => setPage(3)}>
+          <LinkContainer onClick={goToThirdPage}>
             <LinkBtn ref={(el) => (buttons.current[2] = el)} id="3">
               3
             </LinkBtn>

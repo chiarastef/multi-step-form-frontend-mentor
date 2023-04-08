@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { AppContext } from "../context";
 
@@ -23,33 +24,37 @@ const Label = styled.label`
   color: var(--primary-color);
   font-size: 13px;
   letter-spacing: -0.5px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+
+  &:not(:first-of-type) {
+    margin-top: 15px;
+  }
 `;
 
-const Input = styled.input`
-  display: block;
-  width: 100%;
-  font-size: 14px;
-  font-family: inherit;
-  color: #9699ab;
-  padding: 10px;
-  border: 1px solid #9699ab;
-  border-radius: 4px;
-  margin-top: 5px;
-
-  &:focus-visible {
-    border: 0 solid var(--accent-color);
+const Input = styled.div`
+  & > div {
+    width: 100%;
   }
 
-  @media screen and (min-width: 1024px) {
-    font-size: 15px;
+  & input {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    font-family: inherit;
+    padding: 10px;
+    border: 1px solid #9699ab;
+    border-radius: 4px;
+
+    @media screen and (min-width: 1024px) {
+      font-size: 15px;
+    }
   }
 `;
 
 const PersonalInfo = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { formInfo, setFormInfo } = appContext;
+  const { personalInfo, setPersonalInfo, personalFormSubmitted } = appContext;
 
   return (
     <>
@@ -58,40 +63,55 @@ const PersonalInfo = () => {
         Please provide your name, email address, and phone number.
       </Paragraph>
       <form>
-        <Label>
-          Name
-          <Input
-            type="text"
+        <Label>Name</Label>
+        <Input>
+          <TextField
             placeholder="e.g Stephen King"
-            required
-            value={formInfo.name}
-            onChange={(e) => setFormInfo({ ...formInfo, name: e.target.value })}
+            value={personalInfo.name}
+            onChange={(e) =>
+              setPersonalInfo({ ...personalInfo, name: e.target.value })
+            }
+            error={personalFormSubmitted && !personalInfo.name}
+            helperText={
+              personalFormSubmitted &&
+              !personalInfo.name &&
+              "This field is required"
+            }
           />
-        </Label>
-        <Label>
-          Email Address
-          <Input
+        </Input>
+        <Label>Email Address</Label>
+        <Input>
+          <TextField
             type="email"
-            required
             placeholder="e.g stephenking@lorem.com"
-            value={formInfo.email}
+            value={personalInfo.email}
             onChange={(e) =>
-              setFormInfo({ ...formInfo, email: e.target.value })
+              setPersonalInfo({ ...personalInfo, email: e.target.value })
+            }
+            error={personalFormSubmitted && !personalInfo.email}
+            helperText={
+              personalFormSubmitted &&
+              !personalInfo.email &&
+              "This field is required"
             }
           />
-        </Label>
-        <Label>
-          Phone Number
-          <Input
-            type="text"
+        </Input>
+        <Label>Phone Number</Label>
+        <Input>
+          <TextField
             placeholder="e.g. +1 234 567 890"
-            required
-            value={formInfo.phoneNumber}
+            value={personalInfo.phoneNumber}
             onChange={(e) =>
-              setFormInfo({ ...formInfo, phoneNumber: e.target.value })
+              setPersonalInfo({ ...personalInfo, phoneNumber: e.target.value })
+            }
+            error={personalFormSubmitted && !personalInfo.phoneNumber}
+            helperText={
+              personalFormSubmitted &&
+              !personalInfo.phoneNumber &&
+              "This field is required"
             }
           />
-        </Label>
+        </Input>
       </form>
     </>
   );

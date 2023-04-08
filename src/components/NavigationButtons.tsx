@@ -2,21 +2,34 @@ import React from "react";
 import styled from "styled-components";
 import { AppContext } from "../context";
 
-const NavigationBtns = styled.div`
+interface styleProps {
+  firstPage: boolean;
+}
+
+const NavigationBtnsContainer = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff;
   width: 100%;
-  padding: 10px;
+  background-color: #ffffff;
 
   @media screen and (min-width: 768px) {
     position: static;
-    padding: 0;
     margin-top: auto;
+  }
+`;
+
+const NavigationBtns = styled.div<styleProps>`
+  display: flex;
+  justify-content: ${({ firstPage }) =>
+    firstPage ? "flex-end" : "space-between"};
+  width: 90%;
+  padding: 10px 0;
+  margin: auto;
+
+  @media screen and (min-width: 768px) {
+    padding: 0;
   }
 `;
 
@@ -59,30 +72,66 @@ const NextBtn = styled.button`
 const NavigationButtons = () => {
   const appContext = React.useContext(AppContext);
   if (!appContext) return null;
-  const { page, setPage, setShowConfirmation } = appContext;
+  const {
+    page,
+    setPage,
+    setShowConfirmation,
+    personalInfo,
+    planInfo,
+    setPersonalFormSubmitted,
+    setWasPlanSelected,
+  } = appContext;
+
+  const isNotFirstPage = page > 1;
 
   const goToPreviousPage = (): void => {
-    if (page && page > 1) {
+    if (page === 2) {
+      setPersonalFormSubmitted(false);
+    }
+    if (page === 3) {
+      setWasPlanSelected(false);
+    }
+    if (page > 1) {
       setPage(page - 1);
     }
   };
 
   const goToNextPage = (): void => {
-    if (page && page < 4) {
-      setPage(page + 1);
-    }
-    if (page === 4) {
-      setShowConfirmation(true);
+    switch (page) {
+      case 1:
+        setPersonalFormSubmitted(true);
+        if (
+          personalInfo.name &&
+          personalInfo.email &&
+          personalInfo.phoneNumber
+        ) {
+          setPage(page + 1);
+        }
+        break;
+      case 2:
+        setWasPlanSelected(true);
+        if (planInfo.planName) {
+          setPage(page + 1);
+        }
+        break;
+      case 3:
+        setPage(page + 1);
+        break;
+      case 4:
+        setShowConfirmation(true);
+        break;
     }
   };
 
   return (
-    <NavigationBtns>
-      <BackBtn onClick={goToPreviousPage}>Go Back</BackBtn>
-      <NextBtn onClick={goToNextPage}>
-        {page === 4 ? "Confirm" : "Next Step"}
-      </NextBtn>
-    </NavigationBtns>
+    <NavigationBtnsContainer>
+      <NavigationBtns firstPage={!isNotFirstPage}>
+        {page > 1 && <BackBtn onClick={goToPreviousPage}>Go Back</BackBtn>}
+        <NextBtn onClick={goToNextPage}>
+          {page === 4 ? "Confirm" : "Next Step"}
+        </NextBtn>
+      </NavigationBtns>
+    </NavigationBtnsContainer>
   );
 };
 
