@@ -27,7 +27,6 @@ Users should be able to:
 - [Material UI](https://mui.com/)
 - Flexbox
 - Mobile-first workflow
-- JavaScript
 - TypeScript
 - React
 
